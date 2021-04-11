@@ -2,7 +2,7 @@
   A terminal based time blocking program written in python.  
 
   ## Installation
-     git clone https://www.github.com/kaar07/timeblockcli.git/
+     git clone https://github.com/kaar07/timeblockcli.git/
      cd timeblockcli && chmod +x first.sh && ./first.sh
      cd .. && mv timeblockcli ~/.timeblock
   
