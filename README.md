@@ -6,4 +6,4 @@
   #### Run the following commands:  
      git clone https://www.github.com/kaar07/imtimeblock 
      chmod +x first.sh && ./first.sh
-     mv . ~/.timeblock
+     cd .. && mv imtimeblock ~/.timeblock
