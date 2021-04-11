@@ -2,6 +2,8 @@ import os
 import math
 import datetime
 
+home = os.getenv("HOME")
+
 
 def formatTime(inp):
     if(inp.find(":") >= 0):
@@ -11,16 +13,19 @@ def formatTime(inp):
 
 
 def showBlockedTime():
-    with open("~/.timeblock/immutable.txt") as data:
+    immutabletxt_path = home+"/.timeblock/immutable.txt"
+    with open(immutabletxt_path, "r") as data:
         for line in data:
             print(line, end="")
 
 
 def archiveSchedule():
+    immutabletxt_path = home+"/.timeblock/immutable.txt"
+    archivePath = home+"/.timeblock/Archives/"
     todate = datetime.date.today()
-    arcfile = "~/.timeblock/Archives/"+todate.strftime("%b-%d-%Y")+".txt"
+    arcfile = archivePath+todate.strftime("%b-%d-%Y")+".txt"
     os.system("touch "+arcfile)
-    os.system("cp ~/.timeblock/Archives/immutable.txt "+arcfile)
+    os.system("cp "+immutabletxt_path+" "+arcfile)
 
 
 def printHelp():
@@ -32,9 +37,10 @@ def printHelp():
     Options                         |   Commands
     --------------------------------|----------------
                                     |
-    show blocked schedule           |   s/show/Show
+    show blocked schedule           |   s/show/Show/ls
     add a block in the schedule     |   a/add/(PRESS ENTER)
     archive today's schedule        |   archive/arc/Archive
+    show yesterday's schedule       |   prev/yest/yesterday
     erase schedule and start new    |   erase/Erase
     exit from time block program    |   exit/q/:q
 
@@ -43,10 +49,24 @@ def printHelp():
     print(help)
 
 
+def printYesterday():
+    try:
+        archivePath = home+"/.timeblock/Archives/"
+        today = datetime.date.today()
+        yesterday = today - datetime.timedelta(days=1)
+        fileName = archivePath+yesterday.strftime("%b-%d-%Y")+".txt"
+        with open(fileName, "r") as yest:
+            for line in yest:
+                print(line.strip())
+    except FileNotFoundError:
+        print(" Yesterday's schedule was not archived. Oops!")
+
+
 def addTask(n, m, task):
     content = ""
     i = 0
-    with open("~/.timeblock/immutable.txt", "r") as data:
+    immutabletxt_path = home+"/.timeblock/immutable.txt"
+    with open(immutabletxt_path, "r") as data:
         for line in data:
             if(i >= n and i <= m):
                 content += line.strip()+task+"\n"
@@ -54,12 +74,13 @@ def addTask(n, m, task):
                 content += line.strip()+"\n"
             i += 1
 
-    with open("~/.timeblock/immutable.txt", 'w') as d:
+    with open(immutabletxt_path, 'w') as d:
         d.write(content)
 
 
 def refreshSchedule():
-    with open("~/.timeblock/immutable.txt", "w") as data:
+    immutabletxt_path = home+"/.timeblock/immutable.txt"
+    with open(immutabletxt_path, "w") as data:
         for i in range(0, 9):
             data.write("0"+str(i)+":00 - 0"+str(i+1)+":00:-\n")
         data.write("09:00 - 10:00:-\n")
@@ -69,15 +90,15 @@ def refreshSchedule():
 
 
 if __name__ == "__main__":
-    try:
-        while(True):
+    while(True):
+        try:
             print("#", end=" ")
             command = input()
             if(command == "exit" or command == "q" or command == ":q"):
                 exit()
             elif(command == "help"):
                 printHelp()
-            elif(command == "show" or command == "s" or command == "Show"):
+            elif(command == "ls" or command == "show" or command == "s" or command == "Show"):
                 showBlockedTime()
             elif(command == "" or command == "add" or command == "a" or command == "add"):
                 startTime = (input("  Start time:\t"))
@@ -95,8 +116,13 @@ if __name__ == "__main__":
                 refreshSchedule()
             elif(command == "archive" or command == "arc" or command == "Archive"):
                 archiveSchedule()
+            elif(command == "yest" or command == "prev" or command == "yesterday"):
+                printYesterday()
             else:
                 print("You have entered invalid command. Try typing in \"help\".")
-    except KeyboardInterrupt:
-        print("")
-        exit()
+        except KeyboardInterrupt:
+            print("")
+            exit()
+        except ValueError:
+            print("  Please enter a valid time.\n  Format allowed -- HH:MM or HH.x (where x=MM/60)")
+            pass
