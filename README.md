@@ -1,9 +1,18 @@
-# Immutable Time Block
+# TimeBlockCLI 
   A terminal based time blocking program written in python.  
 
-  ## Installation and Usage
+  ## Installation
+     git clone https://www.github.com/kaar07/timeblockcli.git
+     cd timeblockcli && chmod +x first.sh && first.sh
+     cd .. && mv timeblockcli ~/.timeblock
+  
+  ## Usage
+   - In terminal type ***tblock*** to get into interactive mode with timeblockcli
+   - \# appears when the program is expecting a default command.
+   - Use the default command ***help*** to get started with.
+   - Have fun!
 
-  #### Run the following commands:  
-     git clone https://www.github.com/kaar07/imtimeblock 
-     chmod +x timeblockcli/first.sh && .timeblockcli/first.sh
-     mv timeblockcli ~/.timeblock
+  ## Uninstallation commands
+      rm -rf ~/.timeblock
+      Also delete every line in bashrc with 'timeblock'.
+
