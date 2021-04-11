@@ -16,3 +16,18 @@
       rm -rf ~/.timeblock
       Also delete every line in bashrc with 'timeblock'.
 
+  ## Troubleshooting
+
+  #### Usage Issues
+  Verify usage with instructions.
+  Run the program and use the default command ***help*** and check.
+
+  #### File related issues
+  The program uses *immutable.txt* file to store and archive the schedules. Try the following:  
+
+    cd ~
+    cd .timeblock
+    rm immutable.txt
+    python gen.py
+  
+  ##### In case of unresolved issues and bugs, do consider reporting or making a pull request.  
