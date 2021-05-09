@@ -2,10 +2,8 @@
   A terminal based time blocking program written in python.  
 
   ## Installation
-     git clone https://github.com/kaar07/timeblockcli.git/
-     cd timeblockcli && chmod +x first.sh && ./first.sh
-     cd .. && mv timeblockcli ~/.timeblock
-  
+     git clone https://github.com/kaar07/timeblockcli.git/ ~/.timeblock
+     sh ~/.timeblock/first.sh
   ## Usage
    - In terminal type ***tblock*** to get into interactive mode with timeblockcli
    - \# appears when the program is expecting a default command.
